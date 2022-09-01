@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: APP_NAME-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: APP_NAME
+  template:
+    metadata:
+      labels:
+        app: APP_NAME
+    spec:
+      containers:
+        - name: surge
+          image: REPO_URL/IMAGE_TAG
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: APP_NAME-service
+spec:
+  selector:
+    app: APP_NAME
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: TARGET_PORT
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: APP_NAME-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+spec:
+  rules:
+    - host: INGRESS_HOST
+      http:
+        paths:
+          - path: /*
+            backend:
+              serviceName: APP_NAME-service
+              servicePort: 80
+# 先下载ingress controller才能生效
