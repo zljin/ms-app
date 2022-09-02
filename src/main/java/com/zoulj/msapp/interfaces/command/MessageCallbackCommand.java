@@ -23,7 +23,7 @@ public class MessageCallbackCommand {
 
     @Data
     @NoArgsConstructor
-    public static class ReceiverStateDTO {
+    private static class ReceiverStateDTO {
         private String language;
         private String messageRequestId;
         private String state;

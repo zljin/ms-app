@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ScheduledJob {
 
-    @Scheduled(cron = "0/10 * * * * ?")
+    //@Scheduled(cron = "0/10 * * * * ?")
     public void cronJob1(){
         log.info(DateUtil.now() +" alive ");
     }

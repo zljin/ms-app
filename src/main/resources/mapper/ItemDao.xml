@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zoulj.msapp.infrastructure.db.dao.ItemDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.zoulj.msapp.domain.model.product.ItemEntity" id="itemMap">
+        <result property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="price" column="price"/>
+        <result property="description" column="description"/>
+        <result property="sales" column="sales"/>
+        <result property="imgUrl" column="img_url"/>
+    </resultMap>
+
+
+</mapper>
