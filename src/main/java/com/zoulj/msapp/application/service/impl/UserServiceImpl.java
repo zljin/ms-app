@@ -1,6 +1,7 @@
 package com.zoulj.msapp.application.service.impl;
 
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.extra.mail.MailUtil;
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.zoulj.msapp.application.service.UserService;
@@ -10,10 +11,7 @@ import com.zoulj.msapp.infrastructure.db.dao.UserInfoDao;
 import com.zoulj.msapp.infrastructure.db.dao.UserPasswordDao;
 import com.zoulj.msapp.infrastructure.exception.BusinessException;
 import com.zoulj.msapp.infrastructure.exception.EmBusinessError;
-import com.zoulj.msapp.infrastructure.utils.AESUtil;
-import com.zoulj.msapp.infrastructure.utils.JwtUtil;
-import com.zoulj.msapp.infrastructure.utils.SnowFlakeUtil;
-import com.zoulj.msapp.infrastructure.utils.ValidateCodeUtils;
+import com.zoulj.msapp.infrastructure.utils.*;
 import com.zoulj.msapp.interfaces.command.RegisterCommand;
 import com.zoulj.msapp.interfaces.vo.UserVo;
 import lombok.extern.slf4j.Slf4j;
@@ -42,6 +40,7 @@ public class UserServiceImpl implements UserService {
 
     @Resource
     private JwtUtil jwtUtil;
+
 
     @Value("${jwt.config.ttl:12000}")
     private long ttl;
@@ -104,11 +103,13 @@ public class UserServiceImpl implements UserService {
         return userVo;
     }
 
+
     @Override
     public void getOtp(String email) {
         String otp = ValidateCodeUtils.generateValidateCode(6);
         stringRedisTemplate.opsForValue().set(email, otp, 1, TimeUnit.MINUTES);
-        log.info("email:{} otp:{}", email, otp);
-        //todo send Email
+        //hutool 发邮件
+        String text = MailUtil.send(email, "ms-app 验证码", "验证码： "+otp, false);
+        log.info("email:{} otp:{} text:{}", email, otp,text);
     }
 }
