@@ -12,6 +12,11 @@
         <result property="sales" column="sales"/>
         <result property="imgUrl" column="img_url"/>
     </resultMap>
+    <update id="increaseSales">
+        update item
+        set sales = sales+ #{amount}
+        where id = #{id}
+    </update>
 
 
 </mapper>

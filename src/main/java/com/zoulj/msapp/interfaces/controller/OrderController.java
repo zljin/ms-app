@@ -19,10 +19,10 @@ public class OrderController extends BaseController {
 
     //封装下单请求
     @PostMapping("/createorder")
-    public CommonReturnType createOrder(@RequestParam(name = "itemId") Integer itemId,
+    public CommonReturnType createOrder(@RequestParam(name = "itemId") Long itemId,
                                         @RequestParam(name = "amount") Integer amount,
-                                        @RequestParam(name = "promoId", required = false) Integer promoId) throws BusinessException {
-        return CommonReturnType.create(orderService.createOrder(itemId, amount, promoId));
+                                        @RequestParam(name = "promoId", required = false) Long promoId) throws BusinessException {
+        return CommonReturnType.create(orderService.createOrder(itemId, promoId, amount));
     }
 
 

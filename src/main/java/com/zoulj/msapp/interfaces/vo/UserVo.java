@@ -23,4 +23,6 @@ public class UserVo{
 
     private String email;
 
+    private String token;
+
 }

@@ -5,6 +5,6 @@ import com.zoulj.msapp.interfaces.vo.OrderVO;
 
 public interface OrderService {
 
-    OrderVO createOrder(Integer itemId, Integer promoId, Integer amount) throws BusinessException;
+    OrderVO createOrder(Long itemId, Long promoId, Integer amount) throws BusinessException;
 
 }

@@ -18,11 +18,11 @@ public class OrderInfoEntity implements Serializable {
 	/**
 	 * 
 	 */
-	private Integer userId;
+	private Long userId;
 	/**
 	 * 
 	 */
-	private Integer itemId;
+	private Long itemId;
 	/**
 	 * 
 	 */
@@ -38,6 +38,6 @@ public class OrderInfoEntity implements Serializable {
 	/**
 	 * 
 	 */
-	private Integer promoId;
+	private Long promoId;
 
 }

@@ -10,16 +10,19 @@ import com.zoulj.msapp.application.service.ItemService;
 import com.zoulj.msapp.domain.model.product.ItemEntity;
 import com.zoulj.msapp.domain.model.promote.PromoEntity;
 import com.zoulj.msapp.domain.model.resource.ItemStockEntity;
+import com.zoulj.msapp.infrastructure.common.Constant;
 import com.zoulj.msapp.infrastructure.db.dao.ItemDao;
 import com.zoulj.msapp.infrastructure.db.dao.ItemStockDao;
 import com.zoulj.msapp.infrastructure.db.dao.PromoDao;
 import com.zoulj.msapp.infrastructure.exception.BusinessException;
 import com.zoulj.msapp.infrastructure.exception.EmBusinessError;
+import com.zoulj.msapp.infrastructure.utils.RedisLock;
 import com.zoulj.msapp.infrastructure.utils.SnowFlakeUtil;
 import com.zoulj.msapp.interfaces.command.ItemCommand;
 import com.zoulj.msapp.interfaces.vo.ItemVO;
 import com.zoulj.msapp.interfaces.vo.PageResult;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,13 +35,6 @@ import java.util.stream.Collectors;
 @Service
 public class ItemServiceImpl implements ItemService {
 
-    interface Constant {
-        Integer PROMOTE_ZERO = 0;
-        Integer PROMOTE_WAIT = 1;
-        Integer PROMOTE_PROCESS = 2;
-        Integer PROMOTE_END = 3;
-    }
-
     @Resource
     private ItemDao itemDao;
 
@@ -47,6 +43,9 @@ public class ItemServiceImpl implements ItemService {
 
     @Resource
     private PromoDao promoDao;
+
+    @Resource
+    private RedisTemplate redisTemplate;
 
 
     @Override
@@ -58,11 +57,8 @@ public class ItemServiceImpl implements ItemService {
             itemEntity.setId(SnowFlakeUtil.getInstance().nextId());
             itemDao.insert(itemEntity);
         }
-//        if(true){//test Transactional
-//            throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR);
-//        }
 
-        ItemStockEntity itemStockEntity = convert2ItemStockEntity(itemCommand,itemEntity);
+        ItemStockEntity itemStockEntity = convert2ItemStockEntity(itemCommand, itemEntity);
         itemStockDao.insert(itemStockEntity);
 
         ItemCommand.Promo promo = itemCommand.getPromo();
@@ -77,6 +73,11 @@ public class ItemServiceImpl implements ItemService {
             promoEntity.setItemId(itemEntity.getId());
             promoDao.insert(promoEntity);
         }
+
+//        if(true){//test Transactional
+//            throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR);
+//        }
+
         return getItemById(itemEntity.getId());
     }
 
@@ -119,14 +120,27 @@ public class ItemServiceImpl implements ItemService {
 
     @Transactional
     @Override
-    public boolean decreaseStock(Long itemId, Integer amount) throws BusinessException {
-        return false;
+    public void decreaseStock(Long itemId, Integer amount) throws BusinessException {
+
+        try (RedisLock redisLock = new RedisLock(redisTemplate, "product:" + itemId, 30)) {
+            if (redisLock.getLock()) {
+                itemStockDao.decreaseStock(itemId,amount);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Transactional
     @Override
     public void increaseSales(Long itemId, Integer amount) throws BusinessException {
-
+        try (RedisLock redisLock = new RedisLock(redisTemplate, "product:" + itemId, 30)) {
+            if (redisLock.getLock()) {
+                itemDao.increaseSales(itemId,amount);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private ItemEntity convert2ItemEntity(ItemCommand itemCommand) {
@@ -139,7 +153,7 @@ public class ItemServiceImpl implements ItemService {
         return entity;
     }
 
-    private ItemStockEntity convert2ItemStockEntity(ItemCommand itemCommand,ItemEntity itemEntity) {
+    private ItemStockEntity convert2ItemStockEntity(ItemCommand itemCommand, ItemEntity itemEntity) {
         if (itemCommand == null || itemEntity == null) {
             return null;
         }
@@ -154,6 +168,7 @@ public class ItemServiceImpl implements ItemService {
         ItemVO itemVO = new ItemVO();
         if (itemEntity != null) {
             BeanUtils.copyProperties(itemEntity, itemVO);
+            //tip: Long 类型的雪花算法序列会超长,再给个String类型的idStr代表item_id
             itemVO.setIdStr(String.valueOf(itemEntity.getId()));
         }
         if (itemStockEntity != null) {

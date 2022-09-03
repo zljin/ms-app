@@ -36,3 +36,8 @@ mybatis-plus:
     call-setters-on-nulls: true
 
 logging.config: classpath:logback.xml
+
+jwt:
+  config:
+    key: leonard
+    ttl: 600000 # 10分钟失效

@@ -1,22 +1,24 @@
 package com.zoulj.msapp.application.service.impl;
 
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.zoulj.msapp.application.service.UserService;
 import com.zoulj.msapp.domain.model.user.UserInfoEntity;
 import com.zoulj.msapp.domain.model.user.UserPasswordEntity;
-import com.zoulj.msapp.infrastructure.config.ClientInfoHolder;
 import com.zoulj.msapp.infrastructure.db.dao.UserInfoDao;
 import com.zoulj.msapp.infrastructure.db.dao.UserPasswordDao;
 import com.zoulj.msapp.infrastructure.exception.BusinessException;
 import com.zoulj.msapp.infrastructure.exception.EmBusinessError;
 import com.zoulj.msapp.infrastructure.utils.AESUtil;
+import com.zoulj.msapp.infrastructure.utils.JwtUtil;
 import com.zoulj.msapp.infrastructure.utils.SnowFlakeUtil;
 import com.zoulj.msapp.infrastructure.utils.ValidateCodeUtils;
 import com.zoulj.msapp.interfaces.command.RegisterCommand;
 import com.zoulj.msapp.interfaces.vo.UserVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -38,14 +40,20 @@ public class UserServiceImpl implements UserService {
     @Resource
     private StringRedisTemplate stringRedisTemplate;
 
+    @Resource
+    private JwtUtil jwtUtil;
+
+    @Value("${jwt.config.ttl:12000}")
+    private long ttl;
+
     @Override
     public UserVo getUserById(Long id) throws BusinessException {
         UserInfoEntity userInfoEntity = userInfoDao.selectById(id);
-        if(null == userInfoEntity){
+        if (null == userInfoEntity) {
             throw new BusinessException(EmBusinessError.USER_NOT_EXIST);
         }
         UserVo userVo = new UserVo();
-        BeanUtils.copyProperties(userInfoEntity,userVo);
+        BeanUtils.copyProperties(userInfoEntity, userVo);
         return userVo;
     }
 
@@ -57,7 +65,7 @@ public class UserServiceImpl implements UserService {
         }
 
         String otp = stringRedisTemplate.opsForValue().get(registerCommand.getEmail());
-        if(!StrUtil.equals(otp,registerCommand.getOtpCode())){
+        if (!StrUtil.equals(otp, registerCommand.getOtpCode())) {
             throw new BusinessException(EmBusinessError.USER_OTP_FAIL);
         }
 
@@ -81,26 +89,26 @@ public class UserServiceImpl implements UserService {
     public UserVo login(String email, String password) throws BusinessException {
         UserInfoEntity userInfoEntity
                 = userInfoDao.selectOne(new QueryWrapper<UserInfoEntity>().eq("email", email));
-        if(null == userInfoEntity){
+        if (null == userInfoEntity) {
             throw new BusinessException(EmBusinessError.USER_NOT_EXIST);
         }
 
         UserPasswordEntity userPasswordEntity
                 = userPasswordDao.selectOne(new QueryWrapper<UserPasswordEntity>().eq("user_id", userInfoEntity.getId()));
-        if(!StrUtil.equals(password,AESUtil.decrypt(userPasswordEntity.getEncrptPassword()))){
+        if (!StrUtil.equals(password, AESUtil.decrypt(userPasswordEntity.getEncrptPassword()))) {
             throw new BusinessException(EmBusinessError.USER_LOGIN_FAIL);
         }
-        //todo advance
-        ClientInfoHolder.setClientInfo(userInfoEntity);
-        stringRedisTemplate.opsForValue().set(userInfoEntity.getEmail(),"IS_LOGIN",30, TimeUnit.MINUTES);
-        return getUserById(userInfoEntity.getId());
+        UserVo userVo = getUserById(userInfoEntity.getId());
+        userVo.setToken(jwtUtil.createJWT("1", "login_token", email, password));
+        stringRedisTemplate.opsForValue().set("User:"+userInfoEntity.getEmail(), JSONUtil.toJsonStr(userInfoEntity), ttl, TimeUnit.SECONDS);
+        return userVo;
     }
 
     @Override
     public void getOtp(String email) {
         String otp = ValidateCodeUtils.generateValidateCode(6);
-        stringRedisTemplate.opsForValue().set(email,otp);
-        log.info("email:{} otp:{}",email,otp);
+        stringRedisTemplate.opsForValue().set(email, otp, 1, TimeUnit.MINUTES);
+        log.info("email:{} otp:{}", email, otp);
         //todo send Email
     }
 }

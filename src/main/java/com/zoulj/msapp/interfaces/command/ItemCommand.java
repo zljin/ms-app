@@ -58,6 +58,7 @@ public class ItemCommand {
         @ApiModelProperty(value = "秒杀活动名称", name = "promoName", dataType = "String")
         private String promoName;
 
+        //format:2022-09-07T08:51:25.878Z
         @ApiModelProperty(value = "秒杀活动的开始时间", name = "startDate", dataType = "String")
         private Date startDate;
 
