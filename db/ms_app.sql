@@ -11,7 +11,7 @@
  Target Server Version : 50721
  File Encoding         : 65001
 
- Date: 03/09/2022 12:06:53
+ Date: 03/09/2022 18:40:58
 */
 
 SET NAMES utf8mb4;
@@ -36,7 +36,8 @@ CREATE TABLE `item`  (
 -- ----------------------------
 INSERT INTO `item` VALUES (41, 'Redmi K40S', 2199.00, 'Redmi K40S 骁龙870 三星E4 AMOLED 120Hz直屏 OIS光学防抖 67W快充 幻镜 12GB+256GB 5G智能手机 小米红米', 10000, 'https://img10.360buyimg.com/n1/s450x450_jfs/t1/15461/19/18435/77072/630f0a51Eac2f09a2/c21f6dde132d17d4.jpg.avif');
 INSERT INTO `item` VALUES (42, 'iPhone 13', 5399.20, 'Apple iPhone 13 (A2634) 128GB 粉色 支持移动联通电信5G 双卡双待手机', 20000, 'https://img13.360buyimg.com/n1/s450x450_jfs/t1/87369/27/30646/29254/63107c1aEc5d920c7/cca8b9ea1ab47b71.jpg.avif');
-INSERT INTO `item` VALUES (763404919783817216, '联想拯救者Y700', 2599.20, '联想拯救者Y700 8.8英寸游戏平板 骁龙870 2.5k 120Hz 100%DCI-P3色域 游戏视野模式 双X轴线性马达 12G+256G', 1000, 'https://img13.360buyimg.com/n1/s450x450_jfs/t1/120483/2/30805/76004/630ddc3cE21c1e940/ac5321959771f718.jpg.avif');
+INSERT INTO `item` VALUES (763404919783817216, '联想拯救者Y700', 2599.20, '联想拯救者Y700 8.8英寸游戏平板 骁龙870 2.5k 120Hz 100%DCI-P3色域 游戏视野模式 双X轴线性马达 12G+256G', 1001, 'https://img13.360buyimg.com/n1/s450x450_jfs/t1/120483/2/30805/76004/630ddc3cE21c1e940/ac5321959771f718.jpg.avif');
+INSERT INTO `item` VALUES (763488397938393088, '联想拯救者Y7000P', 7299.20, '联想拯救者Y7000P 2022 英特尔酷睿i5 15.6英寸游戏笔记本电脑(12代i5-12500H 16G 512G RTX3050 2.5k电竞屏)', 0, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0fYHgzv0IJWDWX3YKxaEuepxdq0FjF-9J0U66FfSrjg&s');
 
 -- ----------------------------
 -- Table structure for item_stock
@@ -54,7 +55,8 @@ CREATE TABLE `item_stock`  (
 -- ----------------------------
 INSERT INTO `item_stock` VALUES (25, 100, 41);
 INSERT INTO `item_stock` VALUES (26, 56, 42);
-INSERT INTO `item_stock` VALUES (763404919808983040, 1000, 763404919783817216);
+INSERT INTO `item_stock` VALUES (763404919808983040, 999, 763404919783817216);
+INSERT INTO `item_stock` VALUES (763488397967753216, 100, 763488397938393088);
 
 -- ----------------------------
 -- Table structure for order_info
@@ -62,14 +64,19 @@ INSERT INTO `item_stock` VALUES (763404919808983040, 1000, 763404919783817216);
 DROP TABLE IF EXISTS `order_info`;
 CREATE TABLE `order_info`  (
   `id` varchar(32) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `user_id` int(11) NOT NULL DEFAULT 0,
-  `item_id` int(11) NOT NULL DEFAULT 0,
+  `user_id` bigint(20) NOT NULL DEFAULT 0,
+  `item_id` bigint(20) NOT NULL DEFAULT 0,
   `item_price` decimal(10, 2) NOT NULL DEFAULT 0.00,
   `amount` int(11) NOT NULL DEFAULT 0,
   `order_price` decimal(10, 2) NOT NULL DEFAULT 0.00,
-  `promo_id` int(11) NOT NULL DEFAULT 0,
+  `promo_id` bigint(20) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of order_info
+-- ----------------------------
+INSERT INTO `order_info` VALUES ('20220903165153106', 763398861757612032, 763404919783817216, 2299.10, 1, 2299.10, 763404919825760256);
 
 -- ----------------------------
 -- Table structure for promo
@@ -88,7 +95,8 @@ CREATE TABLE `promo`  (
 -- ----------------------------
 -- Records of promo
 -- ----------------------------
-INSERT INTO `promo` VALUES (763404919825760256, '联想拯救者Y700 300折扣卷', '1000-01-01 00:00:00', '1000-01-01 00:00:00', 763404919783817216, 2299.10);
+INSERT INTO `promo` VALUES (763404919825760256, '联想拯救者Y700 300折扣卷', '2022-09-03 00:00:00', '2022-09-29 00:00:00', 763404919783817216, 2299.10);
+INSERT INTO `promo` VALUES (763488397980336128, '联想拯救者Y7000P 1000折扣卷', '2022-09-07 16:51:26', '2022-09-10 16:51:26', 763488397938393088, 6299.20);
 
 -- ----------------------------
 -- Table structure for user_info
