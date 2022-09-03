@@ -15,7 +15,7 @@ https://pdai.tech/md/arch/arch-x-view.html#ddd%E5%88%B0%E5%90%84%E7%A7%8D%E6%9E%
 1. add user interceptor
 2. add swagger api document
     http://localhost:8090/swagger-ui.html
-3. add advices (ServiceLogAspect)
+3. add advices (ServiceLogAspect,UsercheckAspect)
 4. Global exception handling (GlobalExceptionHandler)
 5. add schedule
 6. add globalization
