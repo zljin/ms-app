@@ -109,7 +109,8 @@ public class UserServiceImpl implements UserService {
         String otp = ValidateCodeUtils.generateValidateCode(6);
         stringRedisTemplate.opsForValue().set(email, otp, 1, TimeUnit.MINUTES);
         //hutool 发邮件
-        String text = MailUtil.send(email, "ms-app 验证码", "验证码： "+otp, false);
-        log.info("email:{} otp:{} text:{}", email, otp,text);
+        //String text = MailUtil.send(email, "ms-app 验证码", "验证码： "+otp, false);
+        //log.info("email:{} otp:{} text:{}", email, otp,text);
+        log.info("email:{} otp:{}", email, otp);
     }
 }
