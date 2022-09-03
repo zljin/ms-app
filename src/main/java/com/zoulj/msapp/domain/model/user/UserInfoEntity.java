@@ -40,4 +40,6 @@ public class UserInfoEntity implements Serializable {
 	 */
 	private String thirdPartyId;
 
+	private String email;
+
 }

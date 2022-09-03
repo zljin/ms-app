@@ -15,8 +15,7 @@ public class UserPasswordEntity implements Serializable {
 	/**
 	 * 
 	 */
-	@TableId
-	private Integer id;
+	private Long id;
 	/**
 	 * 
 	 */
@@ -24,6 +23,6 @@ public class UserPasswordEntity implements Serializable {
 	/**
 	 * 
 	 */
-	private Integer userId;
+	private Long userId;
 
 }

@@ -62,7 +62,7 @@ public class ItemServiceImpl implements ItemService {
 //            throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR);
 //        }
 
-        ItemStockEntity itemStockEntity = convert2ItemStockEntity(itemCommand);
+        ItemStockEntity itemStockEntity = convert2ItemStockEntity(itemCommand,itemEntity);
         itemStockDao.insert(itemStockEntity);
 
         ItemCommand.Promo promo = itemCommand.getPromo();
@@ -74,6 +74,7 @@ public class ItemServiceImpl implements ItemService {
             promo.setId(SnowFlakeUtil.getInstance().nextId());
             PromoEntity promoEntity = new PromoEntity();
             BeanUtils.copyProperties(promo, promoEntity);
+            promoEntity.setItemId(itemEntity.getId());
             promoDao.insert(promoEntity);
         }
         return getItemById(itemEntity.getId());
@@ -138,13 +139,13 @@ public class ItemServiceImpl implements ItemService {
         return entity;
     }
 
-    private ItemStockEntity convert2ItemStockEntity(ItemCommand itemCommand) {
-        if (itemCommand == null) {
+    private ItemStockEntity convert2ItemStockEntity(ItemCommand itemCommand,ItemEntity itemEntity) {
+        if (itemCommand == null || itemEntity == null) {
             return null;
         }
         ItemStockEntity entity = new ItemStockEntity();
         entity.setId(SnowFlakeUtil.getInstance().nextId());
-        entity.setItemId(itemCommand.getId());
+        entity.setItemId(itemEntity.getId());
         entity.setStock(itemCommand.getStock());
         return entity;
     }
