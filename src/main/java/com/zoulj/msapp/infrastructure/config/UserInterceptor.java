@@ -5,17 +5,20 @@ import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.zoulj.msapp.domain.model.user.UserInfoEntity;
+import com.zoulj.msapp.infrastructure.annotation.TokenCheck;
 import com.zoulj.msapp.infrastructure.utils.JwtUtil;
 import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Objects;
 
 /**
  * @author leonard
@@ -36,23 +39,33 @@ public class UserInterceptor implements HandlerInterceptor {
             throws Exception {
         log.info(DateUtil.now() + "--preHandle:" + request.getRequestURL());
 
+        TokenCheck annotation = null;
+        if (handler instanceof HandlerMethod) {
+            annotation = ((HandlerMethod) handler).getMethodAnnotation(TokenCheck.class);
+        }
+
+        // 如果有@TokenCheck 注解，并且check为true，检验token
+        if (Objects.nonNull(annotation) && !annotation.check()) {
+            return true;
+        }
+
         try {
             String token = request.getHeader("X-Auth-Token");
-            if(StrUtil.isEmpty(token) || !jwtUtil.checkedJWT(token)){
-                return true;
+            if (StrUtil.isEmpty(token) || !jwtUtil.checkedJWT(token)) {
+                return false;
             }
             Claims claims = jwtUtil.parseJWT(token);
             String email = MapUtil.getStr(claims, "username");
-            String userStr = stringRedisTemplate.opsForValue().get("User:"+email);
-            if(StrUtil.isEmpty(userStr)){
-                return true;
+            String userStr = stringRedisTemplate.opsForValue().get("User:" + email);
+            if (StrUtil.isEmpty(userStr)) {
+                return false;
             }
             UserInfoEntity user = JSONUtil.toBean(userStr, UserInfoEntity.class);
-            if(user==null){
-                return true;
+            if (user == null) {
+                return false;
             }
             ClientInfoHolder.setClientInfo(user);
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
 

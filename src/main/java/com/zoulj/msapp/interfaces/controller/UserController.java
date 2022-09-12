@@ -1,6 +1,7 @@
 package com.zoulj.msapp.interfaces.controller;
 
 import com.zoulj.msapp.application.service.UserService;
+import com.zoulj.msapp.infrastructure.annotation.TokenCheck;
 import com.zoulj.msapp.infrastructure.exception.BusinessException;
 import com.zoulj.msapp.infrastructure.utils.AESUtil;
 import com.zoulj.msapp.interfaces.command.RegisterCommand;
@@ -22,6 +23,7 @@ public class UserController extends BaseController {
     private UserService userService;
 
     @PostMapping("/register")
+    @TokenCheck(check = false)
     public CommonReturnType register(@Valid @RequestBody RegisterCommand registerCommand) throws BusinessException, UnsupportedEncodingException, NoSuchAlgorithmException {
         String password = registerCommand.getPassword();
         registerCommand.setPassword(AESUtil.encrypt(password));
@@ -29,7 +31,8 @@ public class UserController extends BaseController {
         return CommonReturnType.create(null);
     }
 
-    @GetMapping("/login")
+    @PostMapping("/login")
+    @TokenCheck(check = false)
     public CommonReturnType login(@RequestParam(name = "email") String email,
                                   @RequestParam(name = "password") String password) throws BusinessException {
 
@@ -37,6 +40,7 @@ public class UserController extends BaseController {
     }
 
     @GetMapping("/get-otp")
+    @TokenCheck(check = false)
     public CommonReturnType getOtp(@RequestParam(name = "email") String email) {
         userService.getOtp(email);
         return CommonReturnType.create(null);
