@@ -11,7 +11,7 @@ public interface ItemService {
     ItemVO createItem(ItemCommand itemModel) throws BusinessException;
 
     //商品列表浏览
-    PageResult<ItemVO> listItem(String title, Integer pageNo, Integer pageSize);
+    PageResult<ItemVO> listItem(String title, Integer pageCurrent, Integer pageSize);
 
     //商品详情浏览
     ItemVO getItemById(Long id);

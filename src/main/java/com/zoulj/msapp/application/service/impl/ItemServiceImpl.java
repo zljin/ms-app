@@ -82,14 +82,14 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public PageResult<ItemVO> listItem(String title, Integer pageNo, Integer pageSize) {
+    public PageResult<ItemVO> listItem(String title, Integer pageCurrent, Integer pageSize) {
         PageResult<ItemVO> pageResult = new PageResult<>();
         QueryWrapper<ItemEntity> queryWrapper = new QueryWrapper<>();
         if (StrUtil.isNotEmpty(title)) {
             queryWrapper.like("title", title);
         }
 
-        IPage<ItemEntity> page = new Page<>(pageNo, pageSize);
+        IPage<ItemEntity> page = new Page<>(pageCurrent, pageSize);
         IPage<ItemEntity> mapIPage = itemDao.selectPage(page, queryWrapper);
         List<ItemEntity> records = mapIPage.getRecords();
 
@@ -97,11 +97,12 @@ public class ItemServiceImpl implements ItemService {
             List<ItemVO> itemVOS = records.stream()
                     .map(itemEntity -> getItemById(itemEntity.getId()))
                     .collect(Collectors.toList());
-            pageResult.setList(itemVOS);
+            pageResult.setData(itemVOS);
         }
-        pageResult.setPageNo(mapIPage.getCurrent());
-        pageResult.setPageSize(mapIPage.getPages());
+        pageResult.setPageCurrent(mapIPage.getCurrent());
+        pageResult.setPages(mapIPage.getPages());
         pageResult.setTotal(mapIPage.getTotal());
+        pageResult.setStatus("success");
         return pageResult;
     }
 

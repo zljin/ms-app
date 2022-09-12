@@ -11,14 +11,16 @@ import java.util.List;
 @AllArgsConstructor
 public class PageResult<E> {
 
+    private String status;
+
     /**
      * @param pageNo 当前页码
-     * @param pageSize 分页大小
-     * @param total 总页数
+     * @param pages 总页数
+     * @param total 总条数
      * @param list 当前页的集合数量
      */
-    private long pageNo;
-    private long pageSize;
+    private long pageCurrent;
+    private long pages;
     private long total;
-    private List<E> list;
+    private List<E> data;
 }

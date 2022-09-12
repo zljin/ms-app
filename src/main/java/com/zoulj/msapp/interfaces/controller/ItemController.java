@@ -6,6 +6,7 @@ import com.zoulj.msapp.infrastructure.exception.BusinessException;
 import com.zoulj.msapp.interfaces.command.ItemCommand;
 import com.zoulj.msapp.interfaces.vo.CommonReturnType;
 import com.zoulj.msapp.interfaces.vo.ItemVO;
+import com.zoulj.msapp.interfaces.vo.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,9 +33,9 @@ public class ItemController extends BaseController {
 
     @GetMapping("/get-list")
     @TokenCheck(check = false)
-    public CommonReturnType listItem(@RequestParam(value = "title",required = false) String title,
-                                     @RequestParam(value = "pageNo",required = false,defaultValue = "-1") Integer pageNo,
-                                     @RequestParam(value = "pageSize",required = false,defaultValue = "-1") Integer pageSize) {
-        return CommonReturnType.create(itemService.listItem(title, pageNo, pageSize));
+    public PageResult<ItemVO> listItem(@RequestParam(value = "title",required = false) String title,
+                                       @RequestParam(value = "pageCurrent",required = false,defaultValue = "1") Integer pageCurrent,
+                                       @RequestParam(value = "pageSize",required = false,defaultValue = "100000") Integer pageSize) {
+        return itemService.listItem(title, pageCurrent, pageSize);
     }
 }
