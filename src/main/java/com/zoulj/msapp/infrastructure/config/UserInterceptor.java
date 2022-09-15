@@ -50,7 +50,7 @@ public class UserInterceptor implements HandlerInterceptor {
         }
 
         try {
-            String token = request.getHeader("X-Auth-Token");
+            String token = request.getHeader("token");
             if (StrUtil.isEmpty(token) || !jwtUtil.checkedJWT(token)) {
                 return false;
             }

@@ -177,7 +177,9 @@ public class ItemServiceImpl implements ItemService {
         }
         if (promoEntity != null) {
             itemVO.setStartDate(DateUtil.format(promoEntity.getStartDate(), "yyyy-MM-dd HH:mm:ss"));
+            itemVO.setEndDate(DateUtil.format(promoEntity.getEndDate(), "yyyy-MM-dd HH:mm:ss"));
             itemVO.setPromoId(String.valueOf(promoEntity.getId()));
+            itemVO.setPromoName(promoEntity.getPromoName());
             itemVO.setPromoItemPrice(promoEntity.getPromoItemPrice());
             itemVO.setPromoStatus(getPromoStatus(promoEntity));
         } else {

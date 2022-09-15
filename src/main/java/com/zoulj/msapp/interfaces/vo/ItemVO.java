@@ -16,8 +16,12 @@ public class ItemVO extends ItemCommand {
 
     //秒杀活动开始时间
     private String startDate;
+    private String endDate;
 
     private String promoId;
+
+
+    private String promoName;
 
     private BigDecimal promoItemPrice;
 
@@ -62,5 +66,21 @@ public class ItemVO extends ItemCommand {
 
     public void setIdStr(String idStr) {
         this.idStr = idStr;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public String getPromoName() {
+        return promoName;
+    }
+
+    public void setPromoName(String promoName) {
+        this.promoName = promoName;
     }
 }
