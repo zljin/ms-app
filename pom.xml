@@ -101,4 +101,18 @@
 
     </dependencies>
 
+    <!--mvn deploy上传到本地repo和远程私服nexus repo-->
+    <distributionManagement>
+        <repository>
+            <id>upload</id>
+            <name>release</name>
+            <url>http://127.0.0.1:8081/repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>upload</id>
+            <name>snapshot</name>
+            <url>http://127.0.0.1:8081/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
 </project>
