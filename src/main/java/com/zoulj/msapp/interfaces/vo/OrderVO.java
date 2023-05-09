@@ -19,7 +19,7 @@ public class OrderVO {
     /**
      *
      */
-    private Long userId;
+    private String userId;
     /**
      *
      */

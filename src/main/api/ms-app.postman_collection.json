@@ -1,0 +1,895 @@
+{
+	"info": {
+		"_postman_id": "aabe389a-958f-4916-939f-48901870ae9b",
+		"name": "ms-app",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/user/get-otp?email=2668452396%40qq.com",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "zh-CN,zh;q=0.9"
+					},
+					{
+						"key": "Cache-Control",
+						"value": "no-cache"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Cookie",
+						"value": "jenkins-timestamper-offset=-28800000"
+					},
+					{
+						"key": "Pragma",
+						"value": "no-cache"
+					},
+					{
+						"key": "Referer",
+						"value": "http://localhost:8090/swagger-ui.html"
+					},
+					{
+						"key": "Sec-Fetch-Dest",
+						"value": "empty"
+					},
+					{
+						"key": "Sec-Fetch-Mode",
+						"value": "cors"
+					},
+					{
+						"key": "Sec-Fetch-Site",
+						"value": "same-origin"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Google Chrome\";v=\"113\", \"Chromium\";v=\"113\", \"Not-A.Brand\";v=\"24\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"Windows\""
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8090/user/get-otp?email=leonard_zou@163.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"user",
+						"get-otp"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "leonard_zou@163.com"
+						}
+					]
+				},
+				"description": "Generated from a curl request: \ncurl 'http://localhost:8090/user/get-otp?email=2668452396%40qq.com' \\\n  -H 'Accept: */*' \\\n  -H 'Accept-Language: zh-CN,zh;q=0.9' \\\n  -H 'Cache-Control: no-cache' \\\n  -H 'Connection: keep-alive' \\\n  -H 'Cookie: jenkins-timestamper-offset=-28800000' \\\n  -H 'Pragma: no-cache' \\\n  -H 'Referer: http://localhost:8090/swagger-ui.html' \\\n  -H 'Sec-Fetch-Dest: empty' \\\n  -H 'Sec-Fetch-Mode: cors' \\\n  -H 'Sec-Fetch-Site: same-origin' \\\n  -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36' \\\n  -H 'sec-ch-ua: \\\"Google Chrome\\\";v=\\\"113\\\", \\\"Chromium\\\";v=\\\"113\\\", \\\"Not-A.Brand\\\";v=\\\"24\\\"' \\\n  -H 'sec-ch-ua-mobile: ?0' \\\n  -H 'sec-ch-ua-platform: \\\"Windows\\\"' \\\n  --compressed"
+			},
+			"response": []
+		},
+		{
+			"name": "/user/register",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "zh-CN,zh;q=0.9"
+					},
+					{
+						"key": "Cache-Control",
+						"value": "no-cache"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Cookie",
+						"value": "jenkins-timestamper-offset=-28800000"
+					},
+					{
+						"key": "Origin",
+						"value": "http://localhost:8090"
+					},
+					{
+						"key": "Pragma",
+						"value": "no-cache"
+					},
+					{
+						"key": "Referer",
+						"value": "http://localhost:8090/swagger-ui.html"
+					},
+					{
+						"key": "Sec-Fetch-Dest",
+						"value": "empty"
+					},
+					{
+						"key": "Sec-Fetch-Mode",
+						"value": "cors"
+					},
+					{
+						"key": "Sec-Fetch-Site",
+						"value": "same-origin"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Google Chrome\";v=\"113\", \"Chromium\";v=\"113\", \"Not-A.Brand\";v=\"24\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"Windows\""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"otpCode\": \"153658\",\r\n  \"name\": \"root\",\r\n  \"gender\": \"Man\",\r\n  \"age\": \"21\",\r\n  \"telphone\": \"18773336955\",\r\n  \"password\": \"root\",\r\n  \"email\": \"leonard_zou@163.com\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8090/user/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"user",
+						"register"
+					]
+				},
+				"description": "Generated from a curl request: \ncurl 'http://localhost:8090/user/register' \\\n  -H 'Accept: */*' \\\n  -H 'Accept-Language: zh-CN,zh;q=0.9' \\\n  -H 'Cache-Control: no-cache' \\\n  -H 'Connection: keep-alive' \\\n  -H 'Content-Type: application/json' \\\n  -H 'Cookie: jenkins-timestamper-offset=-28800000' \\\n  -H 'Origin: http://localhost:8090' \\\n  -H 'Pragma: no-cache' \\\n  -H 'Referer: http://localhost:8090/swagger-ui.html' \\\n  -H 'Sec-Fetch-Dest: empty' \\\n  -H 'Sec-Fetch-Mode: cors' \\\n  -H 'Sec-Fetch-Site: same-origin' \\\n  -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36' \\\n  -H 'sec-ch-ua: \\\"Google Chrome\\\";v=\\\"113\\\", \\\"Chromium\\\";v=\\\"113\\\", \\\"Not-A.Brand\\\";v=\\\"24\\\"' \\\n  -H 'sec-ch-ua-mobile: ?0' \\\n  -H 'sec-ch-ua-platform: \\\"Windows\\\"' \\\n  --data-raw $'{\\n  \\\"otpCode\\\": \\\"204009\\\",\\n  \\\"name\\\": \\\"mao\\\",\\n  \\\"gender\\\": \\\"Man\\\",\\n  \\\"age\\\": 20,\\n  \\\"telphone\\\": \\\"12345565678\\\",\\n  \\\"password\\\": \\\"123456\\\",\\n  \\\"email\\\": \\\"2668452396@qq.com\\\"\\n}' \\\n  --compressed"
+			},
+			"response": []
+		},
+		{
+			"name": "/user/login?email=2668452396%40qq.com&password=123456",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "zh-CN,zh;q=0.9"
+					},
+					{
+						"key": "Cache-Control",
+						"value": "no-cache"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Content-Length",
+						"value": "0"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Cookie",
+						"value": "jenkins-timestamper-offset=-28800000"
+					},
+					{
+						"key": "Origin",
+						"value": "http://localhost:8090"
+					},
+					{
+						"key": "Pragma",
+						"value": "no-cache"
+					},
+					{
+						"key": "Referer",
+						"value": "http://localhost:8090/swagger-ui.html"
+					},
+					{
+						"key": "Sec-Fetch-Dest",
+						"value": "empty"
+					},
+					{
+						"key": "Sec-Fetch-Mode",
+						"value": "cors"
+					},
+					{
+						"key": "Sec-Fetch-Site",
+						"value": "same-origin"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Google Chrome\";v=\"113\", \"Chromium\";v=\"113\", \"Not-A.Brand\";v=\"24\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"Windows\""
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8090/user/login?email=leonard_zou@163.com&password=root",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"user",
+						"login"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "leonard_zou@163.com"
+						},
+						{
+							"key": "password",
+							"value": "root"
+						}
+					]
+				},
+				"description": "Generated from a curl request: \ncurl 'http://localhost:8090/user/login?email=2668452396%40qq.com&password=123456' \\\n  -X 'POST' \\\n  -H 'Accept: */*' \\\n  -H 'Accept-Language: zh-CN,zh;q=0.9' \\\n  -H 'Cache-Control: no-cache' \\\n  -H 'Connection: keep-alive' \\\n  -H 'Content-Length: 0' \\\n  -H 'Content-Type: application/json' \\\n  -H 'Cookie: jenkins-timestamper-offset=-28800000' \\\n  -H 'Origin: http://localhost:8090' \\\n  -H 'Pragma: no-cache' \\\n  -H 'Referer: http://localhost:8090/swagger-ui.html' \\\n  -H 'Sec-Fetch-Dest: empty' \\\n  -H 'Sec-Fetch-Mode: cors' \\\n  -H 'Sec-Fetch-Site: same-origin' \\\n  -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36' \\\n  -H 'sec-ch-ua: \\\"Google Chrome\\\";v=\\\"113\\\", \\\"Chromium\\\";v=\\\"113\\\", \\\"Not-A.Brand\\\";v=\\\"24\\\"' \\\n  -H 'sec-ch-ua-mobile: ?0' \\\n  -H 'sec-ch-ua-platform: \\\"Windows\\\"' \\\n  --compressed"
+			},
+			"response": []
+		},
+		{
+			"name": "/user/get?id=853239085261651968",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "62eeec53-4cc0-49c7-b132-81ff5743e42f",
+						"type": "text/javascript",
+						"exec": [
+							"//构造一个登录请求",
+							"const loginRequest = {",
+							"    url: 'http://localhost:8090/user/login?email=leonard_zou@163.com&password=root',",
+							"    method: \"POST\"",
+							"};",
+							"",
+							"pm.sendRequest(loginRequest,function(err,res){",
+							"    console.log(res.json().data.token);",
+							"    pm.globals.set(\"e2etoken\",res.json().data.token);",
+							"})",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "zh-CN,zh;q=0.9"
+					},
+					{
+						"key": "Cache-Control",
+						"value": "no-cache"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Cookie",
+						"value": "jenkins-timestamper-offset=-28800000"
+					},
+					{
+						"key": "Pragma",
+						"value": "no-cache"
+					},
+					{
+						"key": "Referer",
+						"value": "http://localhost:8090/swagger-ui.html"
+					},
+					{
+						"key": "Sec-Fetch-Dest",
+						"value": "empty"
+					},
+					{
+						"key": "Sec-Fetch-Mode",
+						"value": "cors"
+					},
+					{
+						"key": "Sec-Fetch-Site",
+						"value": "same-origin"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Google Chrome\";v=\"113\", \"Chromium\";v=\"113\", \"Not-A.Brand\";v=\"24\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"Windows\""
+					},
+					{
+						"key": "token",
+						"value": "{{e2etoken}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8090/user/get?id=853393707687215104",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"user",
+						"get"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "853393707687215104"
+						}
+					]
+				},
+				"description": "Generated from a curl request: \ncurl 'http://localhost:8090/user/get?id=853239085261651968' \\\n  -H 'Accept: */*' \\\n  -H 'Accept-Language: zh-CN,zh;q=0.9' \\\n  -H 'Cache-Control: no-cache' \\\n  -H 'Connection: keep-alive' \\\n  -H 'Cookie: jenkins-timestamper-offset=-28800000' \\\n  -H 'Pragma: no-cache' \\\n  -H 'Referer: http://localhost:8090/swagger-ui.html' \\\n  -H 'Sec-Fetch-Dest: empty' \\\n  -H 'Sec-Fetch-Mode: cors' \\\n  -H 'Sec-Fetch-Site: same-origin' \\\n  -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36' \\\n  -H 'sec-ch-ua: \\\"Google Chrome\\\";v=\\\"113\\\", \\\"Chromium\\\";v=\\\"113\\\", \\\"Not-A.Brand\\\";v=\\\"24\\\"' \\\n  -H 'sec-ch-ua-mobile: ?0' \\\n  -H 'sec-ch-ua-platform: \\\"Windows\\\"' \\\n  -H 'token: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxIiwic3ViIjoibG9naW5fdG9rZW4iLCJpYXQiOjE2ODM1OTQ3NTYsInVzZXJuYW1lIjoiMjY2ODQ1MjM5NkBxcS5jb20iLCJwYXNzd29yZCI6IjEyMzQ1NiIsImV4cCI6MTY4MzU5NTM1Nn0.HVtG8--Vi3TUW6Mb_WppcJ-6YWeBPMkcXLuJLE6bwDY' \\\n  --compressed"
+			},
+			"response": []
+		},
+		{
+			"name": "/item/create",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "9158ba4d-155a-4ec1-87da-1cd719f13fa3",
+						"type": "text/javascript",
+						"exec": [
+							"//构造一个登录请求",
+							"const loginRequest = {",
+							"    url: 'http://localhost:8090/user/login?email=leonard_zou@163.com&password=root',",
+							"    method: \"POST\"",
+							"};",
+							"",
+							"pm.sendRequest(loginRequest,function(err,res){",
+							"    console.log(res.json().data.token);",
+							"    pm.globals.set(\"e2etoken\",res.json().data.token);",
+							"})",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "zh-CN,zh;q=0.9"
+					},
+					{
+						"key": "Cache-Control",
+						"value": "no-cache"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Cookie",
+						"value": "jenkins-timestamper-offset=-28800000"
+					},
+					{
+						"key": "Origin",
+						"value": "http://localhost:8090"
+					},
+					{
+						"key": "Pragma",
+						"value": "no-cache"
+					},
+					{
+						"key": "Referer",
+						"value": "http://localhost:8090/swagger-ui.html"
+					},
+					{
+						"key": "Sec-Fetch-Dest",
+						"value": "empty"
+					},
+					{
+						"key": "Sec-Fetch-Mode",
+						"value": "cors"
+					},
+					{
+						"key": "Sec-Fetch-Site",
+						"value": "same-origin"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Google Chrome\";v=\"113\", \"Chromium\";v=\"113\", \"Not-A.Brand\";v=\"24\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"Windows\""
+					},
+					{
+						"key": "token",
+						"value": "{{e2etoken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"description\": \"Apple iPhone 14 Pro (A2892) 256GB 暗紫色 支持移动联通电信5G 双卡双待手机\",\r\n  \"imgUrl\": \"https://img14.360buyimg.com/n0/jfs/t1/175957/35/36578/36617/645904d3Fdf99cb45/f1a9615626b6b3eb.jpg.avif\",\r\n  \"price\": 8699.2,\r\n  \"promo\": {\r\n    \"endDate\": \"2023-05-01T08:51:25.878Z\",\r\n    \"promoItemPrice\": 7599.2,\r\n    \"promoName\": \"苹果1100折扣卷\",\r\n    \"startDate\": \"2022-05-10T08:51:25.878Z\",\r\n    \"status\": 1\r\n  },\r\n  \"sales\": 0,\r\n  \"stock\": 100,\r\n  \"title\": \"iPhone 14 Pro (A2892) 256GB\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8090/item/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"item",
+						"create"
+					]
+				},
+				"description": "Generated from a curl request: \ncurl 'http://localhost:8090/item/create' \\\n  -H 'Accept: */*' \\\n  -H 'Accept-Language: zh-CN,zh;q=0.9' \\\n  -H 'Cache-Control: no-cache' \\\n  -H 'Connection: keep-alive' \\\n  -H 'Content-Type: application/json' \\\n  -H 'Cookie: jenkins-timestamper-offset=-28800000' \\\n  -H 'Origin: http://localhost:8090' \\\n  -H 'Pragma: no-cache' \\\n  -H 'Referer: http://localhost:8090/swagger-ui.html' \\\n  -H 'Sec-Fetch-Dest: empty' \\\n  -H 'Sec-Fetch-Mode: cors' \\\n  -H 'Sec-Fetch-Site: same-origin' \\\n  -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36' \\\n  -H 'sec-ch-ua: \\\"Google Chrome\\\";v=\\\"113\\\", \\\"Chromium\\\";v=\\\"113\\\", \\\"Not-A.Brand\\\";v=\\\"24\\\"' \\\n  -H 'sec-ch-ua-mobile: ?0' \\\n  -H 'sec-ch-ua-platform: \\\"Windows\\\"' \\\n  -H 'token: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxIiwic3ViIjoibG9naW5fdG9rZW4iLCJpYXQiOjE2ODM2MzAxMzgsInVzZXJuYW1lIjoiMjY2ODQ1MjM5NkBxcS5jb20iLCJwYXNzd29yZCI6IjEyMzQ1NiIsImV4cCI6MTY4MzYzMDczOH0.9KdN62oIWZ8Lj2Qkjcr8gl9PeRYkqa-qqn7Krv_UurA' \\\n  --data-raw $'{\\n  \\\"description\\\": \\\"Apple iPhone 14 Pro (A2892) 256GB 暗紫色 支持移动联通电信5G 双卡双待手机\\\",\\n  \\\"imgUrl\\\": \\\"https://img14.360buyimg.com/n0/jfs/t1/175957/35/36578/36617/645904d3Fdf99cb45/f1a9615626b6b3eb.jpg.avif\\\",\\n  \\\"price\\\": 8699.2,\\n  \\\"promo\\\": {\\n    \\\"endDate\\\": \\\"2023-05-01T08:51:25.878Z\\\",\\n    \\\"promoItemPrice\\\": 7599.2,\\n    \\\"promoName\\\": \\\"苹果1100折扣卷\\\",\\n    \\\"startDate\\\": \\\"2022-05-10T08:51:25.878Z\\\",\\n    \\\"status\\\": 1\\n  },\\n  \\\"sales\\\": 0,\\n  \\\"stock\\\": 100,\\n  \\\"title\\\": \\\"iPhone 14 Pro (A2892) 256GB\\\"\\n}' \\\n  --compressed"
+			},
+			"response": []
+		},
+		{
+			"name": "/item/get",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "9241ef68-d7d4-4f5d-bc2e-db65adccdf87",
+						"type": "text/javascript",
+						"exec": [
+							"//构造一个登录请求",
+							"const loginRequest = {",
+							"    url: 'http://localhost:8090/user/login?email=leonard_zou@163.com&password=root',",
+							"    method: \"POST\"",
+							"};",
+							"",
+							"pm.sendRequest(loginRequest,function(err,res){",
+							"    console.log(res.json().data.token);",
+							"    pm.globals.set(\"e2etoken\",res.json().data.token);",
+							"})",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "zh-CN,zh;q=0.9"
+					},
+					{
+						"key": "Cache-Control",
+						"value": "no-cache"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Cookie",
+						"value": "jenkins-timestamper-offset=-28800000"
+					},
+					{
+						"key": "Origin",
+						"value": "http://localhost:8090"
+					},
+					{
+						"key": "Pragma",
+						"value": "no-cache"
+					},
+					{
+						"key": "Referer",
+						"value": "http://localhost:8090/swagger-ui.html"
+					},
+					{
+						"key": "Sec-Fetch-Dest",
+						"value": "empty"
+					},
+					{
+						"key": "Sec-Fetch-Mode",
+						"value": "cors"
+					},
+					{
+						"key": "Sec-Fetch-Site",
+						"value": "same-origin"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Google Chrome\";v=\"113\", \"Chromium\";v=\"113\", \"Not-A.Brand\";v=\"24\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"Windows\""
+					},
+					{
+						"key": "token",
+						"value": "{{e2etoken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"description\": \"Apple iPhone 14 Pro (A2892) 256GB 暗紫色 支持移动联通电信5G 双卡双待手机\",\r\n  \"imgUrl\": \"https://img14.360buyimg.com/n0/jfs/t1/175957/35/36578/36617/645904d3Fdf99cb45/f1a9615626b6b3eb.jpg.avif\",\r\n  \"price\": 8699.2,\r\n  \"promo\": {\r\n    \"endDate\": \"2023-05-01T08:51:25.878Z\",\r\n    \"promoItemPrice\": 7599.2,\r\n    \"promoName\": \"苹果1100折扣卷\",\r\n    \"startDate\": \"2022-05-10T08:51:25.878Z\",\r\n    \"status\": 1\r\n  },\r\n  \"sales\": 0,\r\n  \"stock\": 100,\r\n  \"title\": \"iPhone 14 Pro (A2892) 256GB\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8090/item/get?id=853394072751046656",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"item",
+						"get"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "853394072751046656"
+						}
+					]
+				},
+				"description": "Generated from a curl request: \ncurl 'http://localhost:8090/item/create' \\\n  -H 'Accept: */*' \\\n  -H 'Accept-Language: zh-CN,zh;q=0.9' \\\n  -H 'Cache-Control: no-cache' \\\n  -H 'Connection: keep-alive' \\\n  -H 'Content-Type: application/json' \\\n  -H 'Cookie: jenkins-timestamper-offset=-28800000' \\\n  -H 'Origin: http://localhost:8090' \\\n  -H 'Pragma: no-cache' \\\n  -H 'Referer: http://localhost:8090/swagger-ui.html' \\\n  -H 'Sec-Fetch-Dest: empty' \\\n  -H 'Sec-Fetch-Mode: cors' \\\n  -H 'Sec-Fetch-Site: same-origin' \\\n  -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36' \\\n  -H 'sec-ch-ua: \\\"Google Chrome\\\";v=\\\"113\\\", \\\"Chromium\\\";v=\\\"113\\\", \\\"Not-A.Brand\\\";v=\\\"24\\\"' \\\n  -H 'sec-ch-ua-mobile: ?0' \\\n  -H 'sec-ch-ua-platform: \\\"Windows\\\"' \\\n  -H 'token: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxIiwic3ViIjoibG9naW5fdG9rZW4iLCJpYXQiOjE2ODM2MzAxMzgsInVzZXJuYW1lIjoiMjY2ODQ1MjM5NkBxcS5jb20iLCJwYXNzd29yZCI6IjEyMzQ1NiIsImV4cCI6MTY4MzYzMDczOH0.9KdN62oIWZ8Lj2Qkjcr8gl9PeRYkqa-qqn7Krv_UurA' \\\n  --data-raw $'{\\n  \\\"description\\\": \\\"Apple iPhone 14 Pro (A2892) 256GB 暗紫色 支持移动联通电信5G 双卡双待手机\\\",\\n  \\\"imgUrl\\\": \\\"https://img14.360buyimg.com/n0/jfs/t1/175957/35/36578/36617/645904d3Fdf99cb45/f1a9615626b6b3eb.jpg.avif\\\",\\n  \\\"price\\\": 8699.2,\\n  \\\"promo\\\": {\\n    \\\"endDate\\\": \\\"2023-05-01T08:51:25.878Z\\\",\\n    \\\"promoItemPrice\\\": 7599.2,\\n    \\\"promoName\\\": \\\"苹果1100折扣卷\\\",\\n    \\\"startDate\\\": \\\"2022-05-10T08:51:25.878Z\\\",\\n    \\\"status\\\": 1\\n  },\\n  \\\"sales\\\": 0,\\n  \\\"stock\\\": 100,\\n  \\\"title\\\": \\\"iPhone 14 Pro (A2892) 256GB\\\"\\n}' \\\n  --compressed"
+			},
+			"response": []
+		},
+		{
+			"name": "/item/get-list",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "7380e923-f97c-4e2d-a1da-0b43962b741e",
+						"type": "text/javascript",
+						"exec": [
+							"//构造一个登录请求",
+							"const loginRequest = {",
+							"    url: 'http://localhost:8090/user/login?email=leonard_zou@163.com&password=root',",
+							"    method: \"POST\"",
+							"};",
+							"",
+							"pm.sendRequest(loginRequest,function(err,res){",
+							"    console.log(res.json().data.token);",
+							"    pm.globals.set(\"e2etoken\",res.json().data.token);",
+							"})",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "zh-CN,zh;q=0.9"
+					},
+					{
+						"key": "Cache-Control",
+						"value": "no-cache"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Cookie",
+						"value": "jenkins-timestamper-offset=-28800000"
+					},
+					{
+						"key": "Origin",
+						"value": "http://localhost:8090"
+					},
+					{
+						"key": "Pragma",
+						"value": "no-cache"
+					},
+					{
+						"key": "Referer",
+						"value": "http://localhost:8090/swagger-ui.html"
+					},
+					{
+						"key": "Sec-Fetch-Dest",
+						"value": "empty"
+					},
+					{
+						"key": "Sec-Fetch-Mode",
+						"value": "cors"
+					},
+					{
+						"key": "Sec-Fetch-Site",
+						"value": "same-origin"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Google Chrome\";v=\"113\", \"Chromium\";v=\"113\", \"Not-A.Brand\";v=\"24\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"Windows\""
+					},
+					{
+						"key": "token",
+						"value": "{{e2etoken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"description\": \"Apple iPhone 14 Pro (A2892) 256GB 暗紫色 支持移动联通电信5G 双卡双待手机\",\r\n  \"imgUrl\": \"https://img14.360buyimg.com/n0/jfs/t1/175957/35/36578/36617/645904d3Fdf99cb45/f1a9615626b6b3eb.jpg.avif\",\r\n  \"price\": 8699.2,\r\n  \"promo\": {\r\n    \"endDate\": \"2023-05-01T08:51:25.878Z\",\r\n    \"promoItemPrice\": 7599.2,\r\n    \"promoName\": \"苹果1100折扣卷\",\r\n    \"startDate\": \"2022-05-10T08:51:25.878Z\",\r\n    \"status\": 1\r\n  },\r\n  \"sales\": 0,\r\n  \"stock\": 100,\r\n  \"title\": \"iPhone 14 Pro (A2892) 256GB\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8090/item/get-list?title=iphone&pageCurrent=1&pageSize=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"item",
+						"get-list"
+					],
+					"query": [
+						{
+							"key": "title",
+							"value": "iphone"
+						},
+						{
+							"key": "pageCurrent",
+							"value": "1"
+						},
+						{
+							"key": "pageSize",
+							"value": "1"
+						}
+					]
+				},
+				"description": "Generated from a curl request: \ncurl 'http://localhost:8090/item/create' \\\n  -H 'Accept: */*' \\\n  -H 'Accept-Language: zh-CN,zh;q=0.9' \\\n  -H 'Cache-Control: no-cache' \\\n  -H 'Connection: keep-alive' \\\n  -H 'Content-Type: application/json' \\\n  -H 'Cookie: jenkins-timestamper-offset=-28800000' \\\n  -H 'Origin: http://localhost:8090' \\\n  -H 'Pragma: no-cache' \\\n  -H 'Referer: http://localhost:8090/swagger-ui.html' \\\n  -H 'Sec-Fetch-Dest: empty' \\\n  -H 'Sec-Fetch-Mode: cors' \\\n  -H 'Sec-Fetch-Site: same-origin' \\\n  -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36' \\\n  -H 'sec-ch-ua: \\\"Google Chrome\\\";v=\\\"113\\\", \\\"Chromium\\\";v=\\\"113\\\", \\\"Not-A.Brand\\\";v=\\\"24\\\"' \\\n  -H 'sec-ch-ua-mobile: ?0' \\\n  -H 'sec-ch-ua-platform: \\\"Windows\\\"' \\\n  -H 'token: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxIiwic3ViIjoibG9naW5fdG9rZW4iLCJpYXQiOjE2ODM2MzAxMzgsInVzZXJuYW1lIjoiMjY2ODQ1MjM5NkBxcS5jb20iLCJwYXNzd29yZCI6IjEyMzQ1NiIsImV4cCI6MTY4MzYzMDczOH0.9KdN62oIWZ8Lj2Qkjcr8gl9PeRYkqa-qqn7Krv_UurA' \\\n  --data-raw $'{\\n  \\\"description\\\": \\\"Apple iPhone 14 Pro (A2892) 256GB 暗紫色 支持移动联通电信5G 双卡双待手机\\\",\\n  \\\"imgUrl\\\": \\\"https://img14.360buyimg.com/n0/jfs/t1/175957/35/36578/36617/645904d3Fdf99cb45/f1a9615626b6b3eb.jpg.avif\\\",\\n  \\\"price\\\": 8699.2,\\n  \\\"promo\\\": {\\n    \\\"endDate\\\": \\\"2023-05-01T08:51:25.878Z\\\",\\n    \\\"promoItemPrice\\\": 7599.2,\\n    \\\"promoName\\\": \\\"苹果1100折扣卷\\\",\\n    \\\"startDate\\\": \\\"2022-05-10T08:51:25.878Z\\\",\\n    \\\"status\\\": 1\\n  },\\n  \\\"sales\\\": 0,\\n  \\\"stock\\\": 100,\\n  \\\"title\\\": \\\"iPhone 14 Pro (A2892) 256GB\\\"\\n}' \\\n  --compressed"
+			},
+			"response": []
+		},
+		{
+			"name": "/order/createorder?itemId=853388545073610752&amount=1&promoId=853388545744699392",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "a25048ba-4265-4876-b424-3f652f731dbb",
+						"type": "text/javascript",
+						"exec": [
+							"//构造一个登录请求",
+							"const loginRequest = {",
+							"    url: 'http://localhost:8090/user/login?email=leonard_zou@163.com&password=root',",
+							"    method: \"POST\"",
+							"};",
+							"",
+							"pm.sendRequest(loginRequest,function(err,res){",
+							"    console.log(res.json().data.token);",
+							"    pm.globals.set(\"e2etoken\",res.json().data.token);",
+							"})",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "zh-CN,zh;q=0.9"
+					},
+					{
+						"key": "Cache-Control",
+						"value": "no-cache"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Content-Length",
+						"value": "0"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Cookie",
+						"value": "jenkins-timestamper-offset=-28800000"
+					},
+					{
+						"key": "Origin",
+						"value": "http://localhost:8090"
+					},
+					{
+						"key": "Pragma",
+						"value": "no-cache"
+					},
+					{
+						"key": "Referer",
+						"value": "http://localhost:8090/swagger-ui.html"
+					},
+					{
+						"key": "Sec-Fetch-Dest",
+						"value": "empty"
+					},
+					{
+						"key": "Sec-Fetch-Mode",
+						"value": "cors"
+					},
+					{
+						"key": "Sec-Fetch-Site",
+						"value": "same-origin"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Google Chrome\";v=\"113\", \"Chromium\";v=\"113\", \"Not-A.Brand\";v=\"24\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"Windows\""
+					},
+					{
+						"key": "token",
+						"value": "{{e2etoken}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8090/order/createorder?itemId=853394072751046656&amount=1&promoId=853394073216614400",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"order",
+						"createorder"
+					],
+					"query": [
+						{
+							"key": "itemId",
+							"value": "853394072751046656"
+						},
+						{
+							"key": "amount",
+							"value": "1"
+						},
+						{
+							"key": "promoId",
+							"value": "853394073216614400"
+						}
+					]
+				},
+				"description": "Generated from a curl request: \ncurl 'http://localhost:8090/order/createorder?itemId=853388545073610752&amount=1&promoId=853388545744699392' \\\n  -X 'POST' \\\n  -H 'Accept: */*' \\\n  -H 'Accept-Language: zh-CN,zh;q=0.9' \\\n  -H 'Cache-Control: no-cache' \\\n  -H 'Connection: keep-alive' \\\n  -H 'Content-Length: 0' \\\n  -H 'Content-Type: application/json' \\\n  -H 'Cookie: jenkins-timestamper-offset=-28800000' \\\n  -H 'Origin: http://localhost:8090' \\\n  -H 'Pragma: no-cache' \\\n  -H 'Referer: http://localhost:8090/swagger-ui.html' \\\n  -H 'Sec-Fetch-Dest: empty' \\\n  -H 'Sec-Fetch-Mode: cors' \\\n  -H 'Sec-Fetch-Site: same-origin' \\\n  -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36' \\\n  -H 'sec-ch-ua: \\\"Google Chrome\\\";v=\\\"113\\\", \\\"Chromium\\\";v=\\\"113\\\", \\\"Not-A.Brand\\\";v=\\\"24\\\"' \\\n  -H 'sec-ch-ua-mobile: ?0' \\\n  -H 'sec-ch-ua-platform: \\\"Windows\\\"' \\\n  -H 'token: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxIiwic3ViIjoibG9naW5fdG9rZW4iLCJpYXQiOjE2ODM2MzA3NTIsInVzZXJuYW1lIjoiMjY2ODQ1MjM5NkBxcS5jb20iLCJwYXNzd29yZCI6IjEyMzQ1NiIsImV4cCI6MTY4MzYzMTM1Mn0.92MxZcMl0FchaS0X4FuJyzJwWb6gzzphhsCGWscwhPQ' \\\n  --compressed"
+			},
+			"response": []
+		}
+	]
+}
