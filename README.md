@@ -37,5 +37,5 @@ feature:
 
 ## step 6 ready postman script and sql script
 
-## step 7 add wiremock to integration test TODO
+## step 7 add wiremock to integration test
 
