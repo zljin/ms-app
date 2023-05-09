@@ -1,4 +1,4 @@
-package com.zoulj.msapp.infrastructure.db.dao;
+package com.zoulj.msapp.infrastructure.mapper;
 
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Param;
 
 
 @Mapper
-public interface ItemStockDao extends BaseMapper<ItemStockEntity> {
+public interface ItemStockMapper extends BaseMapper<ItemStockEntity> {
 
     int decreaseStock(@Param("itemId") Long id, @Param("amount") Integer amount);
 

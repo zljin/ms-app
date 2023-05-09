@@ -17,7 +17,7 @@ import java.security.NoSuchAlgorithmException;
 @Slf4j
 @RestController
 @RequestMapping("/user")
-public class UserController extends BaseController {
+public class UserController{
 
     @Autowired
     private UserService userService;
@@ -47,7 +47,7 @@ public class UserController extends BaseController {
     }
 
     @GetMapping("/get")
-    public CommonReturnType getUser(@RequestParam(name = "id") Long id) throws BusinessException {
+    public CommonReturnType getUser(@RequestParam(name = "id") String id) throws BusinessException {
         return CommonReturnType.create(userService.getUserById(id));
     }
 }

@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement//开启事务
-@MapperScan("com.zoulj.msapp.infrastructure.db.dao")
+@MapperScan("com.zoulj.msapp.infrastructure.mapper")
 public class MybatisConfig {
 
     /**

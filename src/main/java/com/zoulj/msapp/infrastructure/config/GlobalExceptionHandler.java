@@ -2,7 +2,6 @@ package com.zoulj.msapp.infrastructure.config;
 
 import com.zoulj.msapp.infrastructure.exception.BusinessException;
 import com.zoulj.msapp.interfaces.vo.CommonReturnType;
-import com.zoulj.msapp.interfaces.vo.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;

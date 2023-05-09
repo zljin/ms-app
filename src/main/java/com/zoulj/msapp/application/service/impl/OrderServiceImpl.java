@@ -6,9 +6,9 @@ import com.zoulj.msapp.application.service.OrderService;
 import com.zoulj.msapp.application.service.UserService;
 import com.zoulj.msapp.domain.model.order.OrderInfoEntity;
 import com.zoulj.msapp.domain.model.user.UserInfoEntity;
-import com.zoulj.msapp.infrastructure.common.Constant;
+import com.zoulj.msapp.infrastructure.utils.AppConstant;
 import com.zoulj.msapp.infrastructure.config.ClientInfoHolder;
-import com.zoulj.msapp.infrastructure.db.dao.OrderInfoDao;
+import com.zoulj.msapp.infrastructure.mapper.OrderInfoMapper;
 import com.zoulj.msapp.infrastructure.exception.BusinessException;
 import com.zoulj.msapp.infrastructure.exception.EmBusinessError;
 import com.zoulj.msapp.interfaces.vo.ItemVO;
@@ -36,7 +36,7 @@ import java.util.Date;
 public class OrderServiceImpl implements OrderService {
 
     @Resource
-    private OrderInfoDao orderInfoDao;
+    private OrderInfoMapper orderInfoMapper;
 
     @Autowired
     private UserService userService;
@@ -65,7 +65,7 @@ public class OrderServiceImpl implements OrderService {
         orderInfoEntity.setItemPrice((promoId != null ? itemVO.getPromoItemPrice() : itemVO.getPrice()));
         orderInfoEntity.setOrderPrice(orderInfoEntity.getItemPrice().multiply(new BigDecimal(amount)));
         orderInfoEntity.setId(generateOrderId());
-        orderInfoDao.insert(orderInfoEntity);
+        orderInfoMapper.insert(orderInfoEntity);
 
         //加上商品销量
         itemService.increaseSales(itemId,amount);
@@ -118,7 +118,7 @@ public class OrderServiceImpl implements OrderService {
      *                           }
      *                           }
      */
-    private void checkParameters(Long userId, ItemVO itemVO, Long promoId, Integer amount) throws BusinessException {
+    private void checkParameters(String userId, ItemVO itemVO, Long promoId, Integer amount) throws BusinessException {
         //下单的商品是否存在，用户是否合法，购买数量是否正确
         if (itemVO == null) {
             throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR, "商品信息不存在");
@@ -134,7 +134,7 @@ public class OrderServiceImpl implements OrderService {
         if (promoId != null) {
             if (!StrUtil.equals(String.valueOf(promoId), itemVO.getPromoId())) {
                 throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR, "活动信息不正确");
-            } else if (itemVO.getPromoStatus() != Constant.PROMOTE_PROCESS) {
+            } else if (itemVO.getPromoStatus() != AppConstant.PROMOTE_PROCESS) {
                 throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR, "活动信息未开始");
             }
         }

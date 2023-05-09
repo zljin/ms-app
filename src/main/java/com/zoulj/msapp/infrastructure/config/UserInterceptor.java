@@ -1,13 +1,12 @@
 package com.zoulj.msapp.infrastructure.config;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.json.JSONUtil;
 import com.zoulj.msapp.domain.model.user.UserInfoEntity;
 import com.zoulj.msapp.infrastructure.annotation.TokenCheck;
+import com.zoulj.msapp.infrastructure.utils.AppConstant;
 import com.zoulj.msapp.infrastructure.utils.JwtUtil;
-import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -18,7 +17,9 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author leonard
@@ -49,25 +50,22 @@ public class UserInterceptor implements HandlerInterceptor {
             return true;
         }
 
-        try {
-            String token = request.getHeader("token");
-            if (StrUtil.isEmpty(token) || !jwtUtil.checkedJWT(token)) {
-                return false;
-            }
-            Claims claims = jwtUtil.parseJWT(token);
-            String email = MapUtil.getStr(claims, "username");
-            String userStr = stringRedisTemplate.opsForValue().get("User:" + email);
-            if (StrUtil.isEmpty(userStr)) {
-                return false;
-            }
-            UserInfoEntity user = JSONUtil.toBean(userStr, UserInfoEntity.class);
-            if (user == null) {
-                return false;
-            }
-            ClientInfoHolder.setClientInfo(user);
-        } catch (Exception e) {
-
+        String token = request.getHeader("token");
+        if (StrUtil.isEmpty(token) || !jwtUtil.checkedJWT(token)) {
+            return false;
         }
+        String key = AppConstant.LOGIN_USER_KEY + token;
+        Map<Object, Object> userMap = stringRedisTemplate.opsForHash().entries(key);
+        if (userMap.isEmpty()) {
+            return false;
+        }
+        UserInfoEntity user = BeanUtil.fillBeanWithMap(userMap, new UserInfoEntity(), false);
+        if (user == null) {
+            return false;
+        }
+        ClientInfoHolder.setClientInfo(user);
+        //刷新token有效期
+        stringRedisTemplate.expire(key, AppConstant.LOGIN_USER_TTL, TimeUnit.MINUTES);
 
         return true;
     }
@@ -84,5 +82,6 @@ public class UserInterceptor implements HandlerInterceptor {
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
             throws Exception {
         log.info(DateUtil.now() + "--afterCompletion:" + request.getRequestURL());
+        ClientInfoHolder.clear();
     }
 }

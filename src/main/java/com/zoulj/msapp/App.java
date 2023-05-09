@@ -4,11 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
+//http://localhost:8090/actuator/health
 @SpringBootApplication
-@EnableScheduling
-public class MsAppApplication {
-
+public class App {
     public static void main(String[] args) {
-        SpringApplication.run(MsAppApplication.class, args);
+        SpringApplication.run(App.class, args);
     }
 }

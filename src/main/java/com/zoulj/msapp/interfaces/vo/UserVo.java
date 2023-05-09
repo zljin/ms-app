@@ -9,12 +9,12 @@ import lombok.Data;
  */
 @Data
 public class UserVo{
-    private Long id;
+    private String id;
     private String name;
 
-    private Integer gender;
+    private String gender;
 
-    private Integer age;
+    private String age;
 
     private String telphone;
     private String registerMode;

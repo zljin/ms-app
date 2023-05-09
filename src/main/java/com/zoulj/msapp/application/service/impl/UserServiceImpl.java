@@ -1,16 +1,15 @@
 package com.zoulj.msapp.application.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.extra.mail.MailUtil;
-import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.zoulj.msapp.application.service.UserService;
 import com.zoulj.msapp.domain.model.user.UserInfoEntity;
 import com.zoulj.msapp.domain.model.user.UserPasswordEntity;
-import com.zoulj.msapp.infrastructure.db.dao.UserInfoDao;
-import com.zoulj.msapp.infrastructure.db.dao.UserPasswordDao;
 import com.zoulj.msapp.infrastructure.exception.BusinessException;
 import com.zoulj.msapp.infrastructure.exception.EmBusinessError;
+import com.zoulj.msapp.infrastructure.mapper.UserInfoMapper;
+import com.zoulj.msapp.infrastructure.mapper.UserPasswordMapper;
 import com.zoulj.msapp.infrastructure.utils.*;
 import com.zoulj.msapp.interfaces.command.RegisterCommand;
 import com.zoulj.msapp.interfaces.vo.UserVo;
@@ -23,6 +22,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -30,10 +30,10 @@ import java.util.concurrent.TimeUnit;
 public class UserServiceImpl implements UserService {
 
     @Resource
-    private UserInfoDao userInfoDao;
+    private UserInfoMapper userInfoMapper;
 
     @Resource
-    private UserPasswordDao userPasswordDao;
+    private UserPasswordMapper userPasswordMapper;
 
     @Resource
     private StringRedisTemplate stringRedisTemplate;
@@ -46,8 +46,8 @@ public class UserServiceImpl implements UserService {
     private long ttl;
 
     @Override
-    public UserVo getUserById(Long id) throws BusinessException {
-        UserInfoEntity userInfoEntity = userInfoDao.selectById(id);
+    public UserVo getUserById(String id) throws BusinessException {
+        UserInfoEntity userInfoEntity = userInfoMapper.selectById(id);
         if (null == userInfoEntity) {
             throw new BusinessException(EmBusinessError.USER_NOT_EXIST);
         }
@@ -72,13 +72,13 @@ public class UserServiceImpl implements UserService {
             UserInfoEntity userInfoEntity = new UserInfoEntity();
             BeanUtils.copyProperties(registerCommand, userInfoEntity);
             Long userId = SnowFlakeUtil.getInstance().nextId();
-            userInfoEntity.setId(userId);
-            userInfoDao.insert(userInfoEntity);
+            userInfoEntity.setId(userId.toString());
+            userInfoMapper.insert(userInfoEntity);
             UserPasswordEntity userPasswordEntity = new UserPasswordEntity();
             userPasswordEntity.setId(SnowFlakeUtil.getInstance().nextId());
             userPasswordEntity.setUserId(userId);
             userPasswordEntity.setEncrptPassword(registerCommand.getPassword());
-            userPasswordDao.insert(userPasswordEntity);
+            userPasswordMapper.insert(userPasswordEntity);
         } catch (Exception e) {
             throw new BusinessException(EmBusinessError.SQL_ERROR, e.toString());
         }
@@ -87,19 +87,25 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserVo login(String email, String password) throws BusinessException {
         UserInfoEntity userInfoEntity
-                = userInfoDao.selectOne(new QueryWrapper<UserInfoEntity>().eq("email", email));
+                = userInfoMapper.selectOne(new QueryWrapper<UserInfoEntity>().eq("email", email));
         if (null == userInfoEntity) {
             throw new BusinessException(EmBusinessError.USER_NOT_EXIST);
         }
 
         UserPasswordEntity userPasswordEntity
-                = userPasswordDao.selectOne(new QueryWrapper<UserPasswordEntity>().eq("user_id", userInfoEntity.getId()));
+                = userPasswordMapper.selectOne(new QueryWrapper<UserPasswordEntity>().eq("user_id", userInfoEntity.getId()));
         if (!StrUtil.equals(password, AESUtil.decrypt(userPasswordEntity.getEncrptPassword()))) {
             throw new BusinessException(EmBusinessError.USER_LOGIN_FAIL);
         }
+
         UserVo userVo = getUserById(userInfoEntity.getId());
-        userVo.setToken(jwtUtil.createJWT("1", "login_token", email, password));
-        stringRedisTemplate.opsForValue().set("User:"+userInfoEntity.getEmail(), JSONUtil.toJsonStr(userInfoEntity), ttl, TimeUnit.SECONDS);
+        String generateToken = jwtUtil.createJWT("1", "login_token", email, password);
+        userVo.setToken(generateToken);
+
+        String tokenKey = AppConstant.LOGIN_USER_KEY + generateToken;
+        Map<String, Object> userMap = BeanUtil.beanToMap(userVo, false, true);
+        stringRedisTemplate.opsForHash().putAll(tokenKey, userMap);
+        stringRedisTemplate.expire(tokenKey, AppConstant.LOGIN_USER_TTL, TimeUnit.MINUTES);
         return userVo;
     }
 

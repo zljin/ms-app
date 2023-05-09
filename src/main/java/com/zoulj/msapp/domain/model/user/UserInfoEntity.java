@@ -14,19 +14,20 @@ public class UserInfoEntity implements Serializable {
 	/**
 	 * 
 	 */
-	private Long id;
+	private String id;
 	/**
 	 * 
 	 */
 	private String name;
+
 	/**
-	 * 1为男性，2为女性
+	 *
 	 */
-	private Integer gender;
+	private String gender;
 	/**
-	 * 
+	 *
 	 */
-	private Integer age;
+	private String age;
 	/**
 	 * 
 	 */

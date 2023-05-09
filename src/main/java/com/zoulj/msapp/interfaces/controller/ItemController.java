@@ -14,7 +14,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/item")
-public class ItemController extends BaseController {
+public class ItemController{
 
     @Autowired
     private ItemService itemService;

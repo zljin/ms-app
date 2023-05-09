@@ -10,12 +10,11 @@ import com.zoulj.msapp.application.service.ItemService;
 import com.zoulj.msapp.domain.model.product.ItemEntity;
 import com.zoulj.msapp.domain.model.promote.PromoEntity;
 import com.zoulj.msapp.domain.model.resource.ItemStockEntity;
-import com.zoulj.msapp.infrastructure.common.Constant;
-import com.zoulj.msapp.infrastructure.db.dao.ItemDao;
-import com.zoulj.msapp.infrastructure.db.dao.ItemStockDao;
-import com.zoulj.msapp.infrastructure.db.dao.PromoDao;
+import com.zoulj.msapp.infrastructure.utils.AppConstant;
+import com.zoulj.msapp.infrastructure.mapper.ItemMapper;
+import com.zoulj.msapp.infrastructure.mapper.ItemStockMapper;
+import com.zoulj.msapp.infrastructure.mapper.PromoMapper;
 import com.zoulj.msapp.infrastructure.exception.BusinessException;
-import com.zoulj.msapp.infrastructure.exception.EmBusinessError;
 import com.zoulj.msapp.infrastructure.utils.RedisLock;
 import com.zoulj.msapp.infrastructure.utils.SnowFlakeUtil;
 import com.zoulj.msapp.interfaces.command.ItemCommand;
@@ -36,13 +35,13 @@ import java.util.stream.Collectors;
 public class ItemServiceImpl implements ItemService {
 
     @Resource
-    private ItemDao itemDao;
+    private ItemMapper itemMapper;
 
     @Resource
-    private ItemStockDao itemStockDao;
+    private ItemStockMapper itemStockMapper;
 
     @Resource
-    private PromoDao promoDao;
+    private PromoMapper promoMapper;
 
     @Resource
     private RedisTemplate redisTemplate;
@@ -77,11 +76,11 @@ public class ItemServiceImpl implements ItemService {
         ItemEntity itemEntity = convert2ItemEntity(itemCommand);
         if (null != itemEntity) {
             itemEntity.setId(SnowFlakeUtil.getInstance().nextId());
-            itemDao.insert(itemEntity);
+            itemMapper.insert(itemEntity);
         }
 
         ItemStockEntity itemStockEntity = convert2ItemStockEntity(itemCommand, itemEntity);
-        itemStockDao.insert(itemStockEntity);
+        itemStockMapper.insert(itemStockEntity);
 
         ItemCommand.Promo promo = itemCommand.getPromo();
         if (promo.getStatus() != 0
@@ -93,7 +92,7 @@ public class ItemServiceImpl implements ItemService {
             PromoEntity promoEntity = new PromoEntity();
             BeanUtils.copyProperties(promo, promoEntity);
             promoEntity.setItemId(itemEntity.getId());
-            promoDao.insert(promoEntity);
+            promoMapper.insert(promoEntity);
         }
 
 //        if(true){//test Transactional
@@ -112,7 +111,7 @@ public class ItemServiceImpl implements ItemService {
         }
 
         IPage<ItemEntity> page = new Page<>(pageCurrent, pageSize);
-        IPage<ItemEntity> mapIPage = itemDao.selectPage(page, queryWrapper);
+        IPage<ItemEntity> mapIPage = itemMapper.selectPage(page, queryWrapper);
         List<ItemEntity> records = mapIPage.getRecords();
 
         if (CollectionUtil.isNotEmpty(records)) {
@@ -130,13 +129,13 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public ItemVO getItemById(Long id) {
-        ItemEntity itemEntity = itemDao.selectById(id);
+        ItemEntity itemEntity = itemMapper.selectById(id);
         QueryWrapper<ItemStockEntity> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("item_id", id);
-        ItemStockEntity itemStockEntity = itemStockDao.selectOne(queryWrapper);
+        ItemStockEntity itemStockEntity = itemStockMapper.selectOne(queryWrapper);
         QueryWrapper<PromoEntity> queryWrapper2 = new QueryWrapper<>();
         queryWrapper2.eq("item_id", id);
-        PromoEntity promoEntity = promoDao.selectOne(queryWrapper2);
+        PromoEntity promoEntity = promoMapper.selectOne(queryWrapper2);
         return convert2ItemVO(itemEntity, itemStockEntity, promoEntity);
     }
 
@@ -147,7 +146,7 @@ public class ItemServiceImpl implements ItemService {
 
         try (RedisLock redisLock = new RedisLock(redisTemplate, "product:" + itemId, 30)) {
             if (redisLock.getLock()) {
-                itemStockDao.decreaseStock(itemId,amount);
+                itemStockMapper.decreaseStock(itemId,amount);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -159,7 +158,7 @@ public class ItemServiceImpl implements ItemService {
     public void increaseSales(Long itemId, Integer amount) throws BusinessException {
         try (RedisLock redisLock = new RedisLock(redisTemplate, "product:" + itemId, 30)) {
             if (redisLock.getLock()) {
-                itemDao.increaseSales(itemId,amount);
+                itemMapper.increaseSales(itemId,amount);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -205,7 +204,7 @@ public class ItemServiceImpl implements ItemService {
             itemVO.setPromoItemPrice(promoEntity.getPromoItemPrice());
             itemVO.setPromoStatus(getPromoStatus(promoEntity));
         } else {
-            itemVO.setPromoStatus(Constant.PROMOTE_ZERO);
+            itemVO.setPromoStatus(AppConstant.PROMOTE_ZERO);
         }
         return itemVO;
     }
@@ -215,10 +214,10 @@ public class ItemServiceImpl implements ItemService {
         long start = promoEntity.getStartDate().getTime() / 1000;
         long end = promoEntity.getEndDate().getTime() / 1000;
         if (now < start) {
-            return Constant.PROMOTE_WAIT;
+            return AppConstant.PROMOTE_WAIT;
         } else if (now > end) {
-            return Constant.PROMOTE_END;
+            return AppConstant.PROMOTE_END;
         }
-        return Constant.PROMOTE_PROCESS;
+        return AppConstant.PROMOTE_PROCESS;
     }
 }

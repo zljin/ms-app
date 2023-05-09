@@ -3,16 +3,8 @@ package com.zoulj.msapp.interfaces.command;
 import lombok.Data;
 import lombok.ToString;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 
-/**
- * @author leonard
- * @date 2022/9/3
- * @Description TODO
- */
 @Data
 @ToString
 public class RegisterCommand {
@@ -22,12 +14,11 @@ public class RegisterCommand {
     private String name;
 
     @NotNull(message = "性别不能为空")
-    private Integer gender;
+    @Pattern(regexp = "(^Man$|^Woman$|^UGM$)", message = "sex 值不在可选范围")
+    private String gender;
 
-    @NotNull(message = "年龄不能不填写")
-    @Min(value = 0, message = "年龄必须大于0岁")
-    @Max(value = 150, message = "年龄必须小于150岁")
-    private Integer age;
+    @Pattern(regexp = "(^(1[0-9]|[1-9][0-9])$)", message = "范围在10到99岁之间")
+    private String age;
 
     @NotBlank(message = "手机号不能为空")
     private String telphone;
@@ -38,5 +29,6 @@ public class RegisterCommand {
     @NotBlank(message = "密码不能为空")
     private String password;
     @NotBlank(message = "邮件不能为空")
+    @Email(message = "email 格式不正确")
     private String email;
 }

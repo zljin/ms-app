@@ -18,7 +18,7 @@ public class OrderInfoEntity implements Serializable {
 	/**
 	 * 
 	 */
-	private Long userId;
+	private String userId;
 	/**
 	 * 
 	 */
