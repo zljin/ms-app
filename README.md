@@ -77,3 +77,26 @@ com.zoulj.msapp.AppTest.testGlobalization
 
 ```
 
+## 其他
+
+```
+mvn clean package
+docker build -t=’msapp’ .
+docker run -di --name=msapp -p 8090:8090 msapp:latest
+kubectl apply -f deploy.yaml
+```
+
+maven必须安装此插件，否则docker build的容器会error manifest 
+```
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+        </plugin>
+    </plugins>
+</build>
+```
+
+
+
