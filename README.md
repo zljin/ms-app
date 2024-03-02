@@ -4,23 +4,22 @@
 
 ## 简要介绍
 
-项目采用领域驱动模型实现的springboot应用，主要整合了redis,mysql实现秒杀功能
-其中也包括端到端部署的脚本，能够从jar包到docker容器到kubernetes
-未来希望集成wiremock写集成测试，再通过jacoo实现代码覆盖率扫描报告todo
+基于springboot+redis+mysql并采用领域驱动模型实现商品优惠卷秒杀的功能
 
 主要功能有：
-用户的登录注册
-商品的添加，优惠卷的添加（在优惠时间内可用优惠卷抵扣）
-订单秒杀：创建订单记录，扣减库存,增加销量数据
+1. 用户的登录注册
+2. 商品的添加和分页展示
+3. 优惠卷逻辑（在优惠时间内可用优惠卷抵扣）
+4. 订单秒杀：创建订单记录,扣减库存,增加销量数据
 
-## 资料
-Deploy\ 目录存放着部署的脚本和管道代码
-在 ms-app\src\main\api中提供了postman脚本和db脚本还有jmeter的脚本
+启动项目：
+1. 安装mysql,将数据导入数据库
+2. 安装redis
+3. 将postman脚本导入调试
 
-要启动项目请先安装mysql,将数据导入数据库
-然后安装redis
-然后将postman脚本导入调试
+Deploy目录提供了部署的脚本和管道代码
 
+src/main/api目录提供了postman脚本和db脚本还有jmeter的脚本
 
 ## 对应的springboot应用场景
 > 某些功能实现的具体方法
