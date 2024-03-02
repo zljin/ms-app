@@ -21,8 +21,8 @@ Deploy目录提供了部署的脚本和管道代码
 
 src/main/api目录提供了postman脚本和db脚本还有jmeter的脚本
 
-## 对应的springboot应用场景
-> 某些功能实现的具体方法
+## how2springboot
+> 某些功能实现的具体方法,对应的springboot应用场景
 
 ```
 1. 整合mybatis-plus
